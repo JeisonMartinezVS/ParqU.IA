@@ -1,6 +1,8 @@
 # Sistema de Captura y Detección de Placas Vehiculares
 
-Este proyecto es una aplicación que captura imágenes desde una cámara, detecta placas vehiculares en las imágenes, y determina el tipo de vehículo (carro o moto) basado en el formato de la placa.
+Este proyecto es una aplicación que captura imágenes desde una cámara, detecta placas vehiculares en las imágenes, y determina el tipo de vehículo (carro o moto) basado en el formato de la placa. Esto estaria basado en el manejo del estacionamiento en la universidad **Uniminuto**
+
+`![Estas son los precios del parqueadero de la Universidad Uniminuto](TarifasU.jpg)`
 
 ## Características
 
@@ -9,7 +11,9 @@ Este proyecto es una aplicación que captura imágenes desde una cámara, detect
 - **Validación de Placa:**
   - Asegura que las placas detectadas tengan exactamente 6 caracteres alfanuméricos.
   - Determina si la placa pertenece a un carro (termina en número) o a una moto (termina en letra).
-- **Cálculo de Precio:** Calcula el precio según el tipo de vehículo y el rol del usuario (e.g., visitante).
+- **Cálculo de Precio:** Calcula el precio según:
+  - **Tipo de Vehículo:** Los carros y motos tienen diferentes tarifas.
+  - **Rol del Usuario:** Los usuarios pueden tener roles como **estudiantes**, **profesores** o **visitantes**, que influyen en el precio a pagar.
 
 ## Requisitos
 
