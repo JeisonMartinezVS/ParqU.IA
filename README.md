@@ -2,7 +2,7 @@
 
 Este proyecto es una aplicación que captura imágenes desde una cámara, detecta placas vehiculares en las imágenes, y determina el tipo de vehículo (carro o moto) basado en el formato de la placa. Esto estaria basado en el manejo del estacionamiento en la universidad **Uniminuto**
 
-![Estas son los precios del parqueadero de la Universidad Uniminuto](TarifasU.jpg)
+![alt text](TarifasU.jpg)
 
 ## Características
 
