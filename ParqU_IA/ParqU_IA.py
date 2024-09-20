@@ -5,6 +5,8 @@ import os
 
 from ParqU_IA.views.navbar import navbar
 from ParqU_IA.views.footer import footer
+from ParqU_IA.views.datatable import datatable
+
 from rxconfig import config
 
 class State(rx.State):
@@ -39,20 +41,30 @@ def index() -> rx.Component:
     return rx.box(
         navbar(),
         rx.box(
-            # Mostramos el video de la cámara
-            rx.video(
-                playsinline=True,
-                autoplay=True,
-                id="camera",
-                style={"width": "50%", "height": "auto", "margin-top": "20px"}
+            rx.vstack(
+                rx.container(
+                    rx.image(
+                        src="/TarifasU.jpg",
+                        alt="Camara No Iniciada",
+                        class_name="w-full h-full"
+                    ),
+                ),
+                rx.button(
+                    "Capturar placa",
+                    class_name="cursor-pointer"
+                ),
+                class_name="bg-[#1F2937] m-6 items-center justify-center pb-3"    
             ),
-            style={"display": "flex", "flex-direction": "column", "align-items": "center"}
         ),
-        footer(),
-        # Insertamos el script JavaScript usando rx.script
-        rx.script(src="/assets/script.js"),
-        class_name="bg-[#111827] inset-0"
-    )
+        rx.box(
+            datatable()    
+        ),
+        rx.el.footer(
+          footer(),
+          class_name="w-full inset-x-0 bottom-0"
+        ),
+        class_name="bg-[#111827]"
+    ),
 
 # Ejecutar la captura automática al iniciar la aplicación
 def run():

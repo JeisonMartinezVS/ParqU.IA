@@ -15,7 +15,7 @@ def navbar() -> rx.Component:
                             class_name="size-7"
                         ),
                             rx.text(
-                            "Gestor de placas inteligente"
+                            "Gestion del parqueadero UNIMINUTO"
                         ),    
                     ),
                     class_name="items-center bg-[#1F2937] w-full text-white"
