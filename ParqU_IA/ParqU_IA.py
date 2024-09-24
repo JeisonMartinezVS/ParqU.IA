@@ -44,7 +44,7 @@ def index() -> rx.Component:
             rx.vstack(
                 rx.container(
                     rx.image(
-                        src="/TarifasU.jpg",
+                        src="/CamaraNoActivada.png",
                         alt="Camara No Iniciada",
                         class_name="w-full h-full"
                     ),
@@ -57,13 +57,14 @@ def index() -> rx.Component:
             ),
         ),
         rx.box(
-            datatable()    
+            datatable(),
+            class_name="text-white"    
         ),
         rx.el.footer(
           footer(),
           class_name="w-full inset-x-0 bottom-0"
         ),
-        class_name="bg-[#111827]"
+        class_name="bg-[#111827] text-white"
     ),
 
 # Ejecutar la captura automática al iniciar la aplicación
