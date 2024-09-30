@@ -46,7 +46,7 @@ def obtener_usuarios():
     
     try:
         cursor.execute(
-            "SELECT placa, tipo_vehiculo, rol FROM registro_placas"
+            'SELECT placa, tipo_vehiculo, rol FROM registro_placas'
         )
         users = cursor.fetchall()
         

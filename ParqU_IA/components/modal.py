@@ -68,7 +68,6 @@ def modal() -> rx.Component:
                                 ),
                                 rx.select(
                                     ["Estudiante", "Visitante"],
-                                    default_value="Estudiante",
                                     placeholder="Seleccione el rol",
                                     label="Elija el rol",
                                     on_change=lambda value: State.set_rol(value)
@@ -88,7 +87,7 @@ def modal() -> rx.Component:
                                     placeholder="Ingrese el valor de la Placa Vehicular",
                                     name="placa",
                                     id="placa",
-                                    class_name="w-full"
+                                    class_name="w-full uppercase"
                                 ),
                                 rx.text(SelectVehicule.mensaje_error, style={"color": "red"}),  # Mostrar mensaje de error
                             ),
