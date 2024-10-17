@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox, filedialog
 from PIL import Image, ImageTk
 from db import registrar_placa, obtener_tipo_y_rol
-from detection import detectar_placa, calcular_precio, capturar_imagen_camara
+from detection import detectar_placa, calcular_precio, capturar_imagen_camara, validar_placa
 
 def registrar():
     placa = entrada_placa.get().upper()
@@ -34,19 +34,23 @@ def cargar_imagen():
                 if precio is not None:
                     messagebox.showinfo(
                         "Información de la Placa",
-                        f"Placa: {placa}\nTipo de Vehículo: {tipo_vehiculo.capitalize()}\nRol: {rol.capitalize()}\nPrecio: ${precio:.2f}"
+                        f"Placa: {placa}\nPertenece a un vehículo tipo: {tipo_vehiculo.capitalize()}\nRol: {rol.capitalize()}\nPrecio: ${precio:.2f}"
                     )
                 else:
                     messagebox.showerror("Error", "No se pudo calcular el precio.")
             else:
-                # Si la placa no está registrada, se asume como visitante
-                precio = calcular_precio('carro', 'visitante')  # Asumimos 'carro' por defecto
-                respuesta = messagebox.askyesno(
-                    "Placa No Registrada",
-                    f"La placa {placa} no está registrada.\nSe asume como Visitante.\nPrecio: ${precio:.2f}\n\n¿Desea registrar esta placa?"
-                )
-                if respuesta:
-                    abrir_ventana_registro(placa)
+                # Detectar si es carro o moto usando la función validar_placa
+                tipo_vehiculo = validar_placa(placa)
+                if tipo_vehiculo:
+                    precio = calcular_precio(tipo_vehiculo, 'visitante')
+                    respuesta = messagebox.askyesno(
+                        "Placa No Registrada",
+                        f"La placa {placa} no está registrada.\nSe asume como Visitante.\nPrecio: ${precio:.2f} para {tipo_vehiculo}.\n\n¿Desea registrar esta placa?"
+                    )
+                    if respuesta:
+                        abrir_ventana_registro(placa)
+                else:
+                    messagebox.showerror("Error", "No se pudo detectar el tipo de vehículo.")
         else:
             messagebox.showerror("Error", "No se pudo detectar la placa en la imagen seleccionada.")
 
@@ -62,19 +66,23 @@ def capturar_placa_camara():
                 if precio is not None:
                     messagebox.showinfo(
                         "Información de la Placa",
-                        f"Placa: {placa}\nTipo de Vehículo: {tipo_vehiculo.capitalize()}\nRol: {rol.capitalize()}\nPrecio: ${precio:.2f}"
+                        f"Placa: {placa}\nPertenece a un vehículo tipo: {tipo_vehiculo.capitalize()}\nRol: {rol.capitalize()}\nPrecio: ${precio:.2f}"
                     )
                 else:
                     messagebox.showerror("Error", "No se pudo calcular el precio.")
             else:
-                # Si la placa no está registrada, se asume como visitante
-                precio = calcular_precio('carro', 'visitante')  # Asumimos 'carro' por defecto
-                respuesta = messagebox.askyesno(
-                    "Placa No Registrada",
-                    f"La placa {placa} no está registrada.\nSe asume como Visitante.\nPrecio: ${precio:.2f}\n\n¿Desea registrar esta placa?"
-                )
-                if respuesta:
-                    abrir_ventana_registro(placa)
+                # Detectar si es carro o moto usando la función validar_placa
+                tipo_vehiculo = validar_placa(placa)
+                if tipo_vehiculo:
+                    precio = calcular_precio(tipo_vehiculo, 'visitante')
+                    respuesta = messagebox.askyesno(
+                        "Placa No Registrada",
+                        f"La placa {placa} no está registrada.\nSe asume como Visitante.\nPrecio: ${precio:.2f} para {tipo_vehiculo}.\n\n¿Desea registrar esta placa?"
+                    )
+                    if respuesta:
+                        abrir_ventana_registro(placa)
+                else:
+                    messagebox.showerror("Error", "No se pudo detectar el tipo de vehículo.")
         else:
             messagebox.showerror("Error", "No se pudo detectar la placa en la imagen capturada.")
 

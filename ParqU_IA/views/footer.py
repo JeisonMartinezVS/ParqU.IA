@@ -5,7 +5,7 @@ from ParqU_IA.components.tyc import tyc
 
 def footer() -> rx.Component:
     return rx.el.footer(
-        rx.vstack(
+        rx.hstack(
             rx.text(
               "© 2024 ParqU.IA. Todos los derechos reservados."  
             ),

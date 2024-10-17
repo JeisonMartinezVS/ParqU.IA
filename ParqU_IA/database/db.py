@@ -20,14 +20,14 @@ def obtener_conexion():
         print(f"Error al conectar a la base de datos: {e}")
         return None
 
-def registrar_placas(placa, tipo_vehiculo, rol):
+def registrar_placas(nombre, placa, tipo_vehiculo, rol):
     connec = obtener_conexion()
     if connec is None:
         return "Error de conexion con la base de datos"
     try:
         cursor = connec.cursor()
-        query = "INSERT INTO registro_placas (placa, tipo_vehiculo, rol) VALUES (%s, %s, %s)"
-        value = (placa, tipo_vehiculo, rol)
+        query = "INSERT INTO registro_placas (nombre, placa, tipo_vehiculo, rol) VALUES (%s, %s, %s, %s)"
+        value = (nombre, placa, tipo_vehiculo, rol)
         cursor.execute(query, value)
         connec.commit()
         return "Usuario Registrado"
@@ -46,12 +46,12 @@ def obtener_usuarios():
     
     try:
         cursor.execute(
-            'SELECT placa, tipo_vehiculo, rol FROM registro_placas'
+            'SELECT nombre, placa, tipo_vehiculo, rol FROM registro_placas'
         )
         users = cursor.fetchall()
         
         list_users = [
-            {"placa": user[0], "tipo_vehiculo": user[1], "rol": user[2]}
+            {"nombre": user[0] ,"placa": user[1], "tipo_vehiculo": user[2], "rol": user[3]}
             for user in users
         ]
         

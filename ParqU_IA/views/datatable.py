@@ -17,6 +17,7 @@ class UserState(rx.State):
 def mostrar_registro(user: dict):
     """Muestra un registro de usuario en una fila de la tabla."""
     return rx.table.row(
+        rx.table.cell(user['nombre']),
         rx.table.cell(user['placa']),
         rx.table.cell(user['tipo_vehiculo']),
         rx.table.cell(user['rol']),
@@ -34,6 +35,7 @@ def datatable() -> rx.Component:
         rx.table.root(
             rx.table.header(
                 rx.table.row(
+                    rx.table.column_header_cell("Estudiante"),
                     rx.table.column_header_cell("Placa"),
                     rx.table.column_header_cell("Tipo"),
                     rx.table.column_header_cell("Rol"),

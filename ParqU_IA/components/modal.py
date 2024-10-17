@@ -30,14 +30,21 @@ class SelectVehicule(rx.State):
         self.validar_placa()
 
 class State(rx.State):
+    nombre: str = ""
     placa: str = ""
     tipo_vehiculo: str = ""
     rol: str = ""
     mensaje: str = ""
     
     def registrar(self):
-        result = registrar_placas(self.placa, self.tipo_vehiculo, self.rol)
-        self.mensaje = result
+        if self.placa == "":
+            self.mensaje = "El campo placa esta vacio"
+        else:
+            result = registrar_placas(self.nombre, self.placa, self.tipo_vehiculo, self.rol)
+            self.mensaje = result
+        
+    def set_nombre(self, value):
+        self.nombre = value
         
     def set_rol(self, value):
         self.rol = value
@@ -54,7 +61,8 @@ def modal() -> rx.Component:
     return rx.dialog.root(
                 rx.dialog.trigger(
                     rx.button(
-                        "+ Registro Manual",
+                        rx.icon("user-round-plus"),
+                        "Registrar Usuario",
                         class_name="bg-lime-600 top-0 start-0 cursor-pointer",          
                     ),
                 ),
@@ -62,34 +70,69 @@ def modal() -> rx.Component:
                         rx.dialog.title("Agregar nuevo usuario"),
                         rx.flex(
                             rx.vstack(
-                                rx.input(
-                                    placeholder="Nombre de la persona",
-                                    name="nombre",
-                                ),
-                                rx.select(
-                                    ["Estudiante", "Visitante"],
-                                    placeholder="Seleccione el rol",
-                                    label="Elija el rol",
-                                    on_change=lambda value: State.set_rol(value)
-                                ),
-                                rx.select(
-                                    ["Moto", "Carro"],
-                                    # value=SelectVehicule.tipo_vehiculo,
-                                    on_change=lambda value: State.set_tipo_vehiculo(value),
-                                    placeholder="Tipo de vehiculo",
-                                    label="Elija el vehiculo"
-                                ),
-                                rx.input(
-                                    value=SelectVehicule.placa,
-                                    on_change=lambda value: State.set_placa(value),
-                                    max_length=6,
-                                    min_length=5,
-                                    placeholder="Ingrese el valor de la Placa Vehicular",
-                                    name="placa",
-                                    id="placa",
-                                    class_name="w-full uppercase"
-                                ),
-                                rx.text(SelectVehicule.mensaje_error, style={"color": "red"}),  # Mostrar mensaje de error
+                                rx.flex(
+                                    rx.text(
+                                        "Nombre (Estudiante): ",
+                                        class_name="mr-2"
+                                        ),
+                                    rx.input(
+                                        placeholder="Ingresar el nombre",
+                                        name="nombre",
+                                        class_name="w-auto",
+                                        on_change=lambda value: State.set_nombre(value),
+                                        required=True
+                                        ),
+                                    class_name="items-center"
+                                    ),
+                                rx.flex(
+                                    rx.text(
+                                        "Rol: ",
+                                        class_name="mr-2"
+                                        ),
+                                    rx.select(
+                                        ["Estudiante", "Visitante"],
+                                        placeholder="Seleccione el rol",
+                                        label="Elija el rol",
+                                        on_change=lambda value: State.set_rol(value),
+                                        required=True
+                                        ),    
+                                    class_name="items-center"
+                                    ),
+                                rx.flex(
+                                    rx.text(
+                                        "Vehiculo: ",
+                                        class_name="mr-2"
+                                        ),
+                                    rx.select(
+                                        ["Moto", "Carro"],
+                                        # value=SelectVehicule.tipo_vehiculo,
+                                        on_change=lambda value: State.set_tipo_vehiculo(value),
+                                        placeholder="Tipo de vehiculo",
+                                        label="Elija el vehiculo",
+                                        required=True
+                                        ),
+                                    class_name="items-center"
+                                    ),
+                                rx.flex(
+                                    rx.text(
+                                        "Placa Vehicular: ",
+                                        class_name="mr-2"
+                                        ),
+                                    rx.input(
+                                        value=SelectVehicule.placa,
+                                        on_change=lambda value: State.set_placa(value),
+                                        max_length=6,
+                                        min_length=5,
+                                        placeholder="Ingrese la placa",
+                                        name="placa",
+                                        id="placa",
+                                        class_name="uppercase",
+                                        required=True
+                                        ),
+                                    class_name="items-center"
+                                    ),
+                                rx.text(SelectVehicule.mensaje_error, style={"color": "red"}), # Mostrar mensaje de error
+                                class_name="w-full justify-center"
                             ),
                         ),
                     rx.flex(
@@ -105,7 +148,7 @@ def modal() -> rx.Component:
                         class_name="pt-8"
                     ),
                     rx.box(
-                        State.mensaje
+                            rx.badge(State.mensaje, variant="outline")
                     )
                 ),
             )
